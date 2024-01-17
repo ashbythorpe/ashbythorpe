@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <div className="flex-grow w-full bg-gray-100 p-4 h-full flex flex-col items-center">
       <Suspense fallback={<p>Loading...</p>}>
-        <PostList page={page} />
+        <PostList page={page} searchParams={searchParams} />
         <Pagination
           page={page}
           pathname={pathname}
