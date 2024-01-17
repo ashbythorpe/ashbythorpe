@@ -1,8 +1,5 @@
-"use client";
-
 import clsx from "clsx";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { getTotalPosts } from "../lib/data";
 

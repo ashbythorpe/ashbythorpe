@@ -1,15 +1,12 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { getPosts } from "../lib/data";
 import { Post } from "../lib/types";
 
-export async function PostList({ page }: { page: number }) {
-  const posts: Post[] = await fetch("/api/posts/search?page=" + page + "").then(
-    (res) => {
-      console.log(res);
-      return res.json();
-    },
-  );
-
-  console.log(posts);
+export async function PostList({ posts }: { posts: Post[] }) {
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page") || 1);
 
   return (
     <div className="flex flex-col items-center">

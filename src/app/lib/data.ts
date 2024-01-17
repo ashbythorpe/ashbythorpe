@@ -11,12 +11,12 @@ export async function getPosts(page: number) {
     orderBy: {
       createdAt: "desc",
     },
-    include: {
-      title: true,
-      description: true,
-      name: true,
-      createdAt: true,
-    },
+    // include: {
+    //   title: true,
+    //   description: true,
+    //   name: true,
+    //   createdAt: true,
+    // },
   });
 
   return posts;
