@@ -6,13 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@heroicons/react": "latest",
+    "@mdx-js/loader": "^3.0.0",
+    "@mdx-js/react": "^3.0.0",
+    "@next/mdx": "^14.0.4",
+    "@prisma/client": "5.8.1",
+    "@types/mdx": "^2.0.10",
     "@vercel/postgres": "^0.5.1",
     "clsx": "^2.1.0",
     "next": "14.0.4",
+    "prisma": "^5.8.1",
     "react": "^18",
     "react-dom": "^18"
   },

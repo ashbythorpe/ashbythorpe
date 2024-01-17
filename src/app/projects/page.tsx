@@ -30,7 +30,7 @@ export default function Page() {
       <div className="flex flex-col w-full md:w-1/2 items-center">
         <Project
           title="ashbythorpe.com"
-          href="https://github.com/ashbythorpe/ashbythorpe"
+          href="https://github.com/ashbythorpe/ashbythorpe.com"
         >
           This website! Made using React and Next.js. Includes a fully
           functional login and comment system.
