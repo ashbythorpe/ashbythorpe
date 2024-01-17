@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -18,6 +19,8 @@ model Post {
   name        String    @unique
   createdAt   DateTime  @default(now())
   Comment     Comment[]
+
+  @@map("Blog")
 }
 
 model User {
