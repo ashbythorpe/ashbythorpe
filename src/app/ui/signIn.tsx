@@ -1,7 +1,7 @@
 "use client";
 
+import { authenticate } from "../lib/actions";
 import { useFormStatus } from "react-dom";
-import { authenticate } from "../lib/authenticate";
 
 export default function SignInButton() {
   const { pending } = useFormStatus();
