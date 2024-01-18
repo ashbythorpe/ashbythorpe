@@ -43,7 +43,7 @@ function PaginationArrow(
 
   const disabled =
     (current === 1 && direction === "left") ||
-    (current === total && direction === "right");
+    (current >= total && direction === "right");
 
   if (disabled) {
     return (

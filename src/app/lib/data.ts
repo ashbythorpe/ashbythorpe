@@ -27,3 +27,36 @@ export async function getTotalPosts() {
 
   return prisma.blog.count();
 }
+
+const COMMENTS_PER_PAGE = 6;
+
+export async function getComments(name: string, page: number) {
+  noStore();
+
+  const comments = await prisma.comment.findMany({
+    where: {
+      post: {
+        name: name,
+      },
+    },
+    skip: COMMENTS_PER_PAGE * (page - 1),
+    take: COMMENTS_PER_PAGE,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return comments;
+}
+
+export async function getTotalComments(name: string) {
+  noStore();
+
+  return prisma.comment.count({
+    where: {
+      post: {
+        name: name,
+      },
+    },
+  });
+}

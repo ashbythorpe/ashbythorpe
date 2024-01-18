@@ -7,8 +7,7 @@ export type Post = {
 
 export type Comment = {
   id: number;
-  name: string;
-  email: string;
+  email: string | null;
   createdAt: Date;
   content: string;
 };

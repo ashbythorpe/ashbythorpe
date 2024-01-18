@@ -115,19 +115,12 @@ exports.Prisma.BlogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  password: 'password'
-};
-
 exports.Prisma.CommentScalarFieldEnum = {
   id: 'id',
   postId: 'postId',
-  userId: 'userId',
   createdAt: 'createdAt',
-  content: 'content'
+  content: 'content',
+  email: 'email'
 };
 
 exports.Prisma.SortOrder = {
@@ -148,7 +141,6 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Blog: 'Blog',
-  User: 'User',
   Comment: 'Comment'
 };
 
