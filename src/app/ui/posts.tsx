@@ -1,15 +1,6 @@
-import { getPosts } from "../lib/data";
 import { Post } from "../lib/types";
 
-export async function PostList({
-  page,
-  searchParams,
-}: {
-  page: number;
-  searchParams: URLSearchParams;
-}) {
-  const posts = await getPosts(page);
-
+export async function PostList({ posts }: { posts: Post[] }) {
   return (
     <div className="flex flex-col items-center">
       {posts.map((post) => (

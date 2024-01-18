@@ -5,7 +5,7 @@ const ITEMS_PER_PAGE = 3;
 export async function getPosts(page: number) {
   noStore();
 
-  const posts = await prisma.post.findMany({
+  const posts = await prisma.blog.findMany({
     skip: ITEMS_PER_PAGE * (page - 1),
     take: ITEMS_PER_PAGE,
     orderBy: {
@@ -25,5 +25,5 @@ export async function getPosts(page: number) {
 export async function getTotalPosts() {
   noStore();
 
-  return prisma.post.count();
+  return prisma.blog.count();
 }

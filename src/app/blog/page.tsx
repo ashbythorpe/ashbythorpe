@@ -1,27 +1,33 @@
-"use client";
-
-import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { PostList } from "../ui/posts";
 import { Pagination } from "../ui/pagination";
-import { getPosts } from "../lib/data";
+import { getPosts, getTotalPosts } from "../lib/data";
 
-export default function Page() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const page = Number(searchParams.get("page") || 1);
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
+  const page = Number(searchParams.page || 1);
 
   return (
     <div className="flex-grow w-full bg-gray-100 p-4 h-full flex flex-col items-center">
       <Suspense fallback={<p>Loading...</p>}>
-        <PostList page={page} searchParams={searchParams} />
-        <Pagination
-          page={page}
-          pathname={pathname}
-          searchParams={searchParams}
-        />
+        <PostListWrapper page={page} />
+        <PaginationWrapper page={page} />
       </Suspense>
     </div>
   );
+}
+
+async function PostListWrapper({ page }: { page: number }) {
+  const posts = await getPosts(page);
+
+  return <PostList posts={posts} />;
+}
+
+async function PaginationWrapper({ page }: { page: number }) {
+  const totalPages = await getTotalPosts();
+
+  return <Pagination page={page} totalPages={totalPages} />;
 }

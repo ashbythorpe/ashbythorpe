@@ -1,18 +1,20 @@
+"use client";
+
 import clsx from "clsx";
 import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { getTotalPosts } from "../lib/data";
+import { usePathname, useSearchParams } from "next/navigation";
 
-export async function Pagination({
+export function Pagination({
   page,
-  pathname,
-  searchParams,
+  totalPages,
 }: {
   page: number;
-  pathname: string;
-  searchParams: URLSearchParams;
+  totalPages: number;
 }) {
-  const totalPages = await getTotalPosts();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const createPageURL = (pageNumber: number) => {
     const params = new URLSearchParams(searchParams);
@@ -45,14 +47,17 @@ function PaginationArrow(
 
   if (disabled) {
     return (
-      <div className="h-10 w-10 rounded text-gray-500">
+      <div className="h-10 w-10 rounded text-gray-500 flex justify-center items-center">
         <Icon className="w-4" />
       </div>
     );
   } else {
     const url = createPageURL(direction === "left" ? current - 1 : current + 1);
     return (
-      <Link href={url} className="h-10 w-10 rounded hover:bg-gray-400">
+      <Link
+        href={url}
+        className="h-10 w-10 rounded hover:bg-gray-400 flex justify-center items-center"
+      >
         <Icon className="w-4" />
       </Link>
     );
@@ -95,7 +100,7 @@ function pageButton(
 ) {
   if (page === "...") {
     return (
-      <div className="w-10 h-10 rounded border-2 border-white border-hidden">
+      <div className="w-10 h-10 rounded border-2 border-white border-hidden flex justify-center items-center">
         ...
       </div>
     );
@@ -109,7 +114,7 @@ function pageButton(
   const active = page === current;
 
   const className = clsx(
-    "w-10 h-10 rounded border-2 border-white border-hidden",
+    "w-10 h-10 rounded border-2 border-white border-hidden flex justify-center items-center",
     {
       "bg-blue-500 text-gray-50 border-solid": active,
       "hover:bg-gray-400 hover:text-gray-50": !active,
