@@ -29,7 +29,9 @@ async function PaginationWrapper({
   name: string;
   page: number;
 }) {
-  const totalPages = await getTotalComments(name);
+  const totalComments = await getTotalComments(name);
+
+  const totalPages = Math.ceil(totalComments / 6);
 
   return <Pagination page={page} totalPages={totalPages} />;
 }

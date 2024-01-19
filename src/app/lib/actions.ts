@@ -6,11 +6,11 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "./prisma";
 import { redirect } from "next/navigation";
 
-export async function authenticate() {
+export async function authenticate(path: string) {
   noStore();
 
   try {
-    await signIn();
+    await signIn("github", { redirectTo: path });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -66,6 +66,7 @@ export async function createComment(
   try {
     await postComment(content, email, postName);
   } catch (error) {
+    console.error(error);
     return {
       message: "Something went wrong.",
       errors: {},

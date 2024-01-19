@@ -27,7 +27,9 @@ async function PostListWrapper({ page }: { page: number }) {
 }
 
 async function PaginationWrapper({ page }: { page: number }) {
-  const totalPages = await getTotalPosts();
+  const totalPosts = await getTotalPosts();
+
+  const totalPages = Math.ceil(totalPosts / 3);
 
   return <Pagination page={page} totalPages={totalPages} />;
 }

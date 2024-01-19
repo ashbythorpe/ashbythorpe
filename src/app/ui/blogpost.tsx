@@ -1,6 +1,7 @@
 import { auth } from "../../../auth";
 import Comments from "./comments";
 import { CreateComment } from "./createComment";
+import SignInButton from "./signIn";
 
 export default function BlogPost({
   children,
@@ -21,14 +22,12 @@ export default function BlogPost({
   );
 }
 
-export async function SignInOrCreateComment({
-  postName,
-}: {
-  postName: string;
-}) {
+async function SignInOrCreateComment({ postName }: { postName: string }) {
   const session = await auth();
 
   if (session?.user?.email) {
     return <CreateComment email={session.user.email} postName={postName} />;
+  } else {
+    return <SignInButton name={postName} />;
   }
 }
