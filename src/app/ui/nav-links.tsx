@@ -20,28 +20,24 @@ export default function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <div className="flex items-center space-x-7 mr-4 justify-evenly">
+    <div className="flex items-center space-x-7 justify-evenly justify-self-center mx-auto">
       {links.map(({ name, href, icon: Icon }) => (
-        <div
+        <Link
+          href={href}
           key={name}
-          className={clsx("rounded p-1", {
-            "bg-gray-50": pathname === href,
-            "hover:bg-gray-800": pathname !== href,
-          })}
+          className={clsx(
+            "rounded py-1 px-2 text-sm font-medium hover:underline hover:bg-black-700/15",
+            nunito,
+            {
+              "bg-black-700/10": pathname === href,
+            },
+          )}
         >
-          <Link
-            href={href}
-            className={clsx("text-sm", nunito.className, {
-              "text-gray-800 font-medium": pathname === href,
-              "text-gray-50": pathname !== href,
-            })}
-          >
-            <div className="flex items-center space-x-2">
-              <Icon className="h-6 w-6" aria-hidden="true" />
-              <p className="hidden md:block">{name}</p>
-            </div>
-          </Link>
-        </div>
+          <div className="flex items-center space-x-2">
+            <Icon className="h-6 w-6" aria-hidden="true" />
+            <p className="hidden md:block">{name}</p>
+          </div>
+        </Link>
       ))}
     </div>
   );

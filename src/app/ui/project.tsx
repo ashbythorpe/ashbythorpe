@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 export function Project({
   title,
   href,
@@ -7,15 +9,34 @@ export function Project({
   href: string;
   children: React.ReactNode;
 }) {
+  const box_classes = "m-2 rounded-lg w-11/12 h-36 absolute";
+
   return (
-    <a
-      href={href}
-      className="p-2 m-2 bg-gray-300 hover:bg-gray-400 rounded-lg shadow w-11/12 h-36 md:h-36"
-    >
-      <h1 className="text-3xl font-mono font-semibold text-gray-900">
-        {title}
-      </h1>
-      <p>{children}</p>
-    </a>
+    <div className="group relative w-11/12 h-36 m-2">
+      <a
+        href={href}
+        className={clsx(
+          box_classes,
+          "p-2 bg-black-50 group-hover:bg-black-100 z-20",
+        )}
+      >
+        <h1 className="text-3xl font-semibold text-black-900 underline pb-2">
+          {title}
+        </h1>
+        <p>{children}</p>
+      </a>
+      <div
+        className={clsx(
+          box_classes,
+          "bg-cerise-red-600 transition-transform group-hover:translate-x-1 group-hover:translate-y-1 z-10",
+        )}
+      ></div>
+      <div
+        className={clsx(
+          box_classes,
+          "bg-indigo-600 transition-transform group-hover:translate-x-2 group-hover:translate-y-2 z-0",
+        )}
+      ></div>
+    </div>
   );
 }

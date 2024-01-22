@@ -71,8 +71,8 @@ function generatePageButtons(
 ) {
   const pageNumbers = getPageNumbers(current, total);
 
-  return pageNumbers.map((page) =>
-    pageButton(page, current, total, createPageURL),
+  return pageNumbers.map((page, index) =>
+    pageButton(index, page, current, total, createPageURL),
   );
 }
 
@@ -93,6 +93,7 @@ function getPageNumbers(current: number, total: number) {
 }
 
 function pageButton(
+  key: number,
   page: string | number,
   current: number,
   total: number,
@@ -100,7 +101,10 @@ function pageButton(
 ) {
   if (page === "...") {
     return (
-      <div className="w-10 h-10 rounded border-2 border-white border-hidden flex justify-center items-center">
+      <div
+        key={key}
+        className="w-10 h-10 rounded border-2 border-white border-hidden flex justify-center items-center"
+      >
         ...
       </div>
     );
@@ -124,10 +128,14 @@ function pageButton(
   const url = createPageURL(page);
 
   if (active) {
-    return <div className={className}>{page}</div>;
+    return (
+      <div key={key} className={className}>
+        {page}
+      </div>
+    );
   } else {
     return (
-      <Link href={url} className={className}>
+      <Link key={key} href={url} className={className}>
         {page}
       </Link>
     );

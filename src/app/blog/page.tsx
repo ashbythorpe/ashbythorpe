@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { PostList } from "../ui/posts";
 import { Pagination } from "../ui/pagination";
-import { getPosts, getTotalPosts } from "../lib/data";
+import { getTotalPosts } from "../lib/data";
+import { PostListSkeleton } from "../ui/postsSkeleton";
 
 export default function Page({
   searchParams,
@@ -12,18 +13,14 @@ export default function Page({
 
   return (
     <div className="flex-grow w-full bg-gray-100 p-4 h-full flex flex-col items-center">
-      <Suspense fallback={<p>Loading...</p>}>
-        <PostListWrapper page={page} />
+      <Suspense fallback={<PostListSkeleton />}>
+        <PostList page={page} />
+      </Suspense>
+      <Suspense fallback={<div className="h-10"></div>}>
         <PaginationWrapper page={page} />
       </Suspense>
     </div>
   );
-}
-
-async function PostListWrapper({ page }: { page: number }) {
-  const posts = await getPosts(page);
-
-  return <PostList posts={posts} />;
 }
 
 async function PaginationWrapper({ page }: { page: number }) {

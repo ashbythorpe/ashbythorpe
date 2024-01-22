@@ -7,7 +7,7 @@ export function Link({
 }) {
   return (
     <a
-      className="text-gray-900 hover:underline hover:text-gray-700"
+      className="text-gray-700 hover:underline hover:text-gray-600"
       href={href}
     >
       {children}
