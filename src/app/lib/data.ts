@@ -1,5 +1,6 @@
 import prisma from "@/app/lib/prisma";
 import { unstable_noStore as noStore } from "next/cache";
+import { Comment } from "./types";
 
 const ITEMS_PER_PAGE = 3;
 export async function getPosts(page: number) {
@@ -30,12 +31,15 @@ export async function getTotalPosts() {
 
 const COMMENTS_PER_PAGE = 6;
 
-export async function getComments(name: string, page: number) {
+export async function getComments(
+  name: string,
+  page: number,
+): Promise<Comment[]> {
   noStore();
 
   const comments = await prisma.comment.findMany({
     where: {
-      post: {
+      blog: {
         name: name,
       },
     },
@@ -43,6 +47,17 @@ export async function getComments(name: string, page: number) {
     take: COMMENTS_PER_PAGE,
     orderBy: {
       createdAt: "desc",
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      content: true,
+      user: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
     },
   });
 
@@ -54,7 +69,7 @@ export async function getTotalComments(name: string) {
 
   return prisma.comment.count({
     where: {
-      post: {
+      blog: {
         name: name,
       },
     },

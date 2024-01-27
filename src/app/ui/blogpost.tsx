@@ -13,7 +13,7 @@ export default function BlogPost({
   params: { page?: string };
 }) {
   return (
-    <div className="py-5 px-5 md:px-20 lg:px-40">
+    <div className="flex-grow w-full bg-gray-100 h-full py-5 px-5 md:px-20 lg:px-40">
       <div className="prose">{children}</div>
       <hr className="my-10 bg-gray-300 border-0 h-px" />
       <Comments name={name} params={params} />

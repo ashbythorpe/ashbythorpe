@@ -14,7 +14,7 @@ export function CommentList({ comments }: { comments: Comment[] }) {
 }
 
 export function CommentDisplay({ comment }: { comment: Comment }) {
-  const email = comment.email || "Anonymous";
+  const name = comment?.user?.name || comment?.user?.email || "Anonymous";
 
   const time = duration(comment.createdAt);
 
@@ -22,7 +22,7 @@ export function CommentDisplay({ comment }: { comment: Comment }) {
     <>
       <p>{comment.content}</p>
       <div className="flex justify-between">
-        <p className="text-xs text-gray-500">{email}</p>
+        <p className="text-xs text-gray-500">{name}</p>
         <p className="text-xs text-gray-500">{time}</p>
       </div>
     </>

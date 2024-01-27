@@ -1,7 +1,7 @@
 "use server";
 
 import { AuthError } from "next-auth";
-import { signIn } from "../../../auth";
+import { auth, signIn } from "../../../auth";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "./prisma";
 import { redirect } from "next/navigation";
@@ -24,18 +24,20 @@ export async function authenticate(path: string) {
   }
 }
 
-async function postComment(comment: string, email: string, postName: string) {
+async function postComment(comment: string, id: string, postName: string) {
   noStore();
 
-  await prisma.blog.update({
-    where: {
-      name: postName,
-    },
+  await prisma.comment.create({
     data: {
-      Comment: {
-        create: {
-          content: comment,
-          email: email,
+      content: comment,
+      blog: {
+        connect: {
+          name: postName,
+        },
+      },
+      user: {
+        connect: {
+          id: id,
         },
       },
     },
@@ -50,11 +52,20 @@ export type FormState = {
 };
 
 export async function createComment(
-  email: string,
   postName: string,
   prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
+  const session = await auth();
+
+  console.log(session);
+
+  if (!session?.user?.id) {
+    return {
+      message: "Please sign in.",
+    };
+  }
+
   const content = formData.get("content")?.toString() || "";
 
   if (!content) {
@@ -64,7 +75,7 @@ export async function createComment(
   }
 
   try {
-    await postComment(content, email, postName);
+    await postComment(content, session.user.id, postName);
   } catch (error) {
     console.error(error);
     return {
