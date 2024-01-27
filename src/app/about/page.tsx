@@ -5,7 +5,7 @@ import { nunito } from "../ui/fonts";
 
 export default function Page() {
   return (
-    <div className="flex-grow w-full bg-gray-100 h-full grid grid-cols-3 py-4 px-5 md:px-10">
+    <div className="flex-grow w-full bg-gray-100 h-full md:grid md:grid-cols-3 py-4 px-5 md:px-10">
       <div className="flex flex-col items-center">
         <h1 className="text-2xl text-gray-700 underline mt-4 my-4">
           Ashby Thorpe

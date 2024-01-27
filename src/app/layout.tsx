@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`text-black ${inter.className}`}>
         <div className="min-h-dvh flex flex-col">
           <NavHeader />
           {children}

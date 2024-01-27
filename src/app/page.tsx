@@ -7,7 +7,7 @@ export default function Home() {
         <div className="w-1/2 border-b border-b-gray-400/70 items-center flex flex-col pb-2 mb-4">
           <h1 className="text-3xl text-black-900 font-mono">Hi!</h1>
         </div>
-        <div className="flex-grow items-center w-1/2">
+        <div className="flex-grow items-center w-2/3 md:w-1/2">
           <p>
             I&apos;m Ashby. I study Mathematics and Computer Science at the
             University of Bristol.
