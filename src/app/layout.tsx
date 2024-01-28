@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavHeader from "./ui/nav";
 import { inter } from "./ui/fonts";
-import { SpeedInsights } from "@vercel/speed-insights/remix";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Ashby Thorpe",
