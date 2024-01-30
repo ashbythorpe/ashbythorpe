@@ -10,7 +10,7 @@ export async function authenticate(path: string) {
   noStore();
 
   try {
-    await signIn("github", { redirectTo: path });
+    await signIn("github");
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -20,7 +20,7 @@ export async function authenticate(path: string) {
           return "Something went wrong.";
       }
     }
-    return error;
+    throw error;
   }
 }
 

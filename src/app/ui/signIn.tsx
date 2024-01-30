@@ -10,10 +10,6 @@ export function SignInButton({ name }: { name: string }) {
     undefined,
   );
 
-  if (state) {
-    console.log(state);
-  }
-
   return (
     <>
       <form action={dispatch}>

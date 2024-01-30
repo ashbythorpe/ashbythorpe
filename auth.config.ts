@@ -1,9 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
-  pages: {
-    signIn: "/login",
-  },
   callbacks: {
     // @ts-expect-error
     session: ({ session, user }) => ({

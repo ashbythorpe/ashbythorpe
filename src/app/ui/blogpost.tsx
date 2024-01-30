@@ -28,7 +28,7 @@ async function SignInOrCreateComment({ postName }: { postName: string }) {
   if (session?.user?.email) {
     return (
       <>
-        <CreateComment email={session.user.email} postName={postName} />;
+        <CreateComment email={session.user.email} postName={postName} />
         <SignOutButton />
       </>
     );
