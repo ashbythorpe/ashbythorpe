@@ -17,7 +17,7 @@ export async function PostList({ page }: { page: number }) {
         },
       )}
     >
-      {posts.map((post) => (
+      {posts.map((post: Post) => (
         <PostCard key={post.name} post={post} />
       ))}
     </div>
