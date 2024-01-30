@@ -6,7 +6,7 @@ import { useFormState, useFormStatus } from "react-dom";
 export function SignInButton({ name }: { name: string }) {
   const { pending } = useFormStatus();
   const [state, dispatch] = useFormState(
-    authenticate.bind(null, `ashbythorpe.com/blog/${name}`),
+    authenticate.bind(null, `https://ashbythorpe.com/blog/${name}`),
     undefined,
   );
 
