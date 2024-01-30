@@ -19,7 +19,7 @@
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.4",
-    "@prisma/client": "^5.8.1",
+    "@prisma/client": "latest",
     "@types/mdx": "^2.0.10",
     "@vercel/postgres": "^0.5.1",
     "@vercel/speed-insights": "^1.0.8",
@@ -27,7 +27,7 @@
     "clsx": "^2.1.0",
     "next": "latest",
     "next-auth": "beta",
-    "prisma": "^5.8.1",
+    "prisma": "latest",
     "react": "^18",
     "react-dom": "^18"
   },
