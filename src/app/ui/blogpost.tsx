@@ -1,7 +1,7 @@
-import { auth } from "../../../auth";
+import { auth, signOut } from "../../../auth";
 import Comments from "./comments";
 import { CreateComment } from "./createComment";
-import SignInButton from "./signIn";
+import { SignInButton } from "./signIn";
 
 export default function BlogPost({
   children,
@@ -26,8 +26,28 @@ async function SignInOrCreateComment({ postName }: { postName: string }) {
   const session = await auth();
 
   if (session?.user?.email) {
-    return <CreateComment email={session.user.email} postName={postName} />;
+    return (
+      <>
+        <CreateComment email={session.user.email} postName={postName} />;
+        <SignOutButton />
+      </>
+    );
   } else {
     return <SignInButton name={postName} />;
   }
+}
+
+function SignOutButton() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signOut();
+      }}
+    >
+      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        Sign out
+      </button>
+    </form>
+  );
 }

@@ -20,6 +20,8 @@ export async function authenticate(path: string) {
           return "Something went wrong.";
       }
     }
+    console.log(error);
+    console.error(error);
     throw error;
   }
 }
