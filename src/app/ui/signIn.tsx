@@ -6,9 +6,13 @@ import { useFormState, useFormStatus } from "react-dom";
 export function SignInButton({ name }: { name: string }) {
   const { pending } = useFormStatus();
   const [state, dispatch] = useFormState(
-    authenticate.bind(null, `/blog/${name}`),
+    authenticate.bind(null, `ashbythorpe.com/blog/${name}`),
     undefined,
   );
+
+  if (state) {
+    console.log(state);
+  }
 
   return (
     <>
@@ -20,7 +24,9 @@ export function SignInButton({ name }: { name: string }) {
           Sign in with GitHub
         </button>
       </form>
-      {state && <p className="text-sm text-red-500">{state}</p>}
+      {typeof state === "string" && (
+        <p className="text-sm text-red-500">{state}</p>
+      )}
     </>
   );
 }
