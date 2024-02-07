@@ -20,4 +20,5 @@ export const {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+  debug: true,
 });
