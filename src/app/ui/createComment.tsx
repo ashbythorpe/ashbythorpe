@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import { FormState, createComment } from "../lib/actions";
+import { FormState, createComment, deleteComment } from "../lib/actions";
 import { useState } from "react";
 
 export function CreateComment({
@@ -52,5 +52,22 @@ export function CreateComment({
         )}
       </form>
     </div>
+  );
+}
+
+export function DeleteButton({ id, name }: { id: number; name: string }) {
+  const { pending } = useFormStatus();
+
+  const action = deleteComment.bind(null, id, name);
+
+  return (
+    <form action={action}>
+      <button
+        className="text-red-500 hover:text-red-700"
+        aria-disabled={pending}
+      >
+        Delete
+      </button>
+    </form>
   );
 }

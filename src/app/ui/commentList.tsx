@@ -1,6 +1,6 @@
-import { deleteComment } from "../lib/actions";
 import { Comment } from "../lib/types";
 import { getUserName } from "../lib/utils";
+import { DeleteButton } from "./createComment";
 
 export function CommentList({
   comments,
@@ -52,16 +52,6 @@ export function CommentDisplay({
         <p className="text-xs text-gray-500">{time}</p>
       </div>
     </>
-  );
-}
-
-async function DeleteButton({ id, name }: { id: number; name: string }) {
-  const action = deleteComment.bind(null, id, name);
-
-  return (
-    <form action={action}>
-      <button className="text-red-500 hover:text-red-700">Delete</button>
-    </form>
   );
 }
 
