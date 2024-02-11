@@ -54,6 +54,7 @@ export async function getComments(
       content: true,
       user: {
         select: {
+          id: true,
           name: true,
           email: true,
         },

@@ -9,7 +9,8 @@ export type Comment = {
   id: number;
   createdAt: Date;
   content: string;
-  user?: {
+  user: {
+    id: string;
     name: string | null;
     email: string | null;
   };

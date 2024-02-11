@@ -5,10 +5,10 @@ import { FormState, createComment } from "../lib/actions";
 import { useState } from "react";
 
 export function CreateComment({
-  email,
+  username,
   postName,
 }: {
-  email: string;
+  username: string;
   postName: string;
 }) {
   const createCommentWithEmail = createComment.bind(null, postName);
@@ -30,7 +30,7 @@ export function CreateComment({
 
   return (
     <div className="w-2/3 border-b border-b-gray-400/70 items-center flex flex-col pb-2 mb-4">
-      <p className="text-gray-400 text-sm">{email}</p>
+      <p className="text-gray-400 text-sm">{username}</p>
       <form action={action}>
         <textarea
           className="w-full"

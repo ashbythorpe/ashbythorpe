@@ -6,9 +6,11 @@ import { Pagination } from "./pagination";
 export default async function Comments({
   name,
   params,
+  id,
 }: {
   name: string;
   params: { page?: string };
+  id: string | null;
 }) {
   const page = Number(params.page || 1);
 
@@ -16,7 +18,7 @@ export default async function Comments({
 
   return (
     <div className="rounded-sm border border-gray-700 p-2">
-      <CommentList comments={comments} />
+      <CommentList comments={comments} id={id} name={name} />
       <PaginationWrapper name={name} page={page} />
     </div>
   );

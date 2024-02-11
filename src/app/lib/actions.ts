@@ -7,6 +7,22 @@ import prisma from "./prisma";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+export type FormState = {
+  errors?: {
+    content?: string[];
+  };
+  message?: string | null;
+};
+
+const FormSchema = z.object({
+  content: z
+    .string({
+      required_error: "Please enter a comment.",
+      invalid_type_error: "Please enter a comment.",
+    })
+    .min(1, { message: "Please enter a comment." }),
+});
+
 export async function authenticate() {
   try {
     await signIn("github");
@@ -40,22 +56,6 @@ async function postComment(comment: string, id: string, postName: string) {
     },
   });
 }
-
-export type FormState = {
-  errors?: {
-    content?: string[];
-  };
-  message?: string | null;
-};
-
-const FormSchema = z.object({
-  content: z
-    .string({
-      required_error: "Please enter a comment.",
-      invalid_type_error: "Please enter a comment.",
-    })
-    .min(1, { message: "Please enter a comment." }),
-});
 
 export async function createComment(
   postName: string,
@@ -96,6 +96,40 @@ export async function createComment(
       message: "Something went wrong.",
     };
   }
+
+  revalidatePath(`/blog/${postName}`);
+  redirect(`/blog/${postName}`);
+}
+
+export async function deleteComment(id: number, postName: string) {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return;
+  }
+
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  if (comment?.user?.id !== session.user.id) {
+    return;
+  }
+
+  await prisma.comment.delete({
+    where: {
+      id: id,
+    },
+  });
 
   revalidatePath(`/blog/${postName}`);
   redirect(`/blog/${postName}`);

@@ -1,31 +1,67 @@
+import { deleteComment } from "../lib/actions";
 import { Comment } from "../lib/types";
+import { getUserName } from "../lib/utils";
 
-export function CommentList({ comments }: { comments: Comment[] }) {
+export function CommentList({
+  comments,
+  id,
+  name,
+}: {
+  comments: Comment[];
+  id: string | null;
+  name: string;
+}) {
   return (
     <>
       <p className="font-bold">Comments:</p>
       <div className="space-y-4">
         {comments.map((comment) => (
-          <CommentDisplay key={comment.id} comment={comment} />
+          <CommentDisplay
+            key={comment.id}
+            comment={comment}
+            canDelete={!!id && comment.user.id === id}
+            postName={name}
+          />
         ))}
       </div>
     </>
   );
 }
 
-export function CommentDisplay({ comment }: { comment: Comment }) {
-  const name = comment?.user?.name || comment?.user?.email || "Anonymous";
+export function CommentDisplay({
+  comment,
+  canDelete,
+  postName,
+}: {
+  comment: Comment;
+  canDelete: boolean;
+  postName: string;
+}) {
+  const name = getUserName(comment);
 
   const time = duration(comment.createdAt);
 
   return (
     <>
-      <p>{comment.content}</p>
+      <div className="flex flex-grow justify-between">
+        <p>{comment.content}</p>
+        {canDelete && <DeleteButton id={comment.id} name={postName} />}
+      </div>
       <div className="flex justify-between">
         <p className="text-xs text-gray-500">{name}</p>
         <p className="text-xs text-gray-500">{time}</p>
       </div>
     </>
+  );
+}
+
+async function DeleteButton({ id, name }: { id: number; name: string }) {
+  const action = deleteComment.bind(null, id, name);
+
+  return (
+    <form action={action}>
+      <button className="text-red-500 hover:text-red-700">Delete</button>
+    </form>
   );
 }
 
