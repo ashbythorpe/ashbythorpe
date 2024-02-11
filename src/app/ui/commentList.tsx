@@ -65,10 +65,16 @@ function duration(date: Date) {
     return "Yesterday";
   } else if (days < 7) {
     return `${days} days ago`;
+  } else if (days < 14) {
+    return "1 week ago";
   } else if (days < 30) {
     return `${Math.floor(days / 7)} weeks ago`;
+  } else if (days < 60) {
+    return "1 month ago";
   } else if (days < 365) {
     return `${Math.floor(days / 30)} months ago`;
+  } else if (days < 730) {
+    return "1 year ago";
   } else {
     return `${Math.floor(days / 365)} years ago`;
   }
