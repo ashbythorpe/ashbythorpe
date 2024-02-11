@@ -64,15 +64,15 @@ export async function createComment(
 ): Promise<FormState> {
   const session = await auth();
 
-  console.log(session);
-
   if (!session?.user?.id) {
     return {
       message: "Please sign in.",
     };
   }
 
-  const result = FormSchema.safeParse(formData);
+  const result = FormSchema.safeParse({
+    content: formData.get("content"),
+  });
 
   if (!result.success) {
     return {
