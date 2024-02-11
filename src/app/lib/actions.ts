@@ -6,9 +6,8 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "./prisma";
 import { redirect } from "next/navigation";
 
-export async function authenticate(path: string) {
   noStore();
-
+export async function authenticate() {
   try {
     await signIn("github");
   } catch (error) {

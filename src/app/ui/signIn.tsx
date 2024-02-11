@@ -3,12 +3,9 @@
 import { authenticate } from "../lib/actions";
 import { useFormState, useFormStatus } from "react-dom";
 
-export function SignInButton({ name }: { name: string }) {
+export function SignInButton() {
   const { pending } = useFormStatus();
-  const [state, dispatch] = useFormState(
-    authenticate.bind(null, `https://ashbythorpe.com/blog/${name}`),
-    undefined,
-  );
+  const [state, dispatch] = useFormState(authenticate, undefined);
 
   return (
     <>

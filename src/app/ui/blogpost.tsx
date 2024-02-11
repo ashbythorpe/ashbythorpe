@@ -33,7 +33,7 @@ async function SignInOrCreateComment({ postName }: { postName: string }) {
       </>
     );
   } else {
-    return <SignInButton name={postName} />;
+    return <SignInButton />;
   }
 }
 
