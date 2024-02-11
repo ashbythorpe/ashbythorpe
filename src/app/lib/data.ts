@@ -1,9 +1,9 @@
 import prisma from "@/app/lib/prisma";
 import { unstable_noStore as noStore } from "next/cache";
-import { Comment } from "./types";
+import { Comment, Post } from "./types";
 
 const ITEMS_PER_PAGE = 3;
-export async function getPosts(page: number) {
+export async function getPosts(page: number): Promise<Post[]> {
   noStore();
 
   const posts = await prisma.blog.findMany({
@@ -12,12 +12,12 @@ export async function getPosts(page: number) {
     orderBy: {
       createdAt: "desc",
     },
-    // include: {
-    //   title: true,
-    //   description: true,
-    //   name: true,
-    //   createdAt: true,
-    // },
+    select: {
+      title: true,
+      description: true,
+      name: true,
+      createdAt: true,
+    },
   });
 
   return posts;
