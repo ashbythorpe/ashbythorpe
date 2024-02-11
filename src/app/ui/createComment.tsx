@@ -38,9 +38,12 @@ export function CreateComment({
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        {state?.errors?.content && (
-          <p className="text-sm text-red-500">{state.errors.content}</p>
-        )}
+        {state?.errors?.content &&
+          state.errors.content.map((error) => (
+            <p className="text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
         <button className="text-blue-500" aria-disabled={pending}>
           Comment
         </button>

@@ -2,11 +2,11 @@
 
 import { AuthError } from "next-auth";
 import { auth, signIn } from "../../../auth";
-import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 
-  noStore();
 export async function authenticate() {
   try {
     await signIn("github");
@@ -24,8 +24,6 @@ export async function authenticate() {
 }
 
 async function postComment(comment: string, id: string, postName: string) {
-  noStore();
-
   await prisma.comment.create({
     data: {
       content: comment,
@@ -45,10 +43,19 @@ async function postComment(comment: string, id: string, postName: string) {
 
 export type FormState = {
   errors?: {
-    content?: string;
+    content?: string[];
   };
   message?: string | null;
 };
+
+const FormSchema = z.object({
+  content: z
+    .string({
+      required_error: "Please enter a comment.",
+      invalid_type_error: "Please enter a comment.",
+    })
+    .min(1, { message: "Please enter a comment." }),
+});
 
 export async function createComment(
   postName: string,
@@ -65,7 +72,15 @@ export async function createComment(
     };
   }
 
-  const content = formData.get("content")?.toString() || "";
+  const result = FormSchema.safeParse(formData);
+
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+
+  const { content } = result.data;
 
   if (!content) {
     return {
@@ -79,7 +94,6 @@ export async function createComment(
     console.error(error);
     return {
       message: "Something went wrong.",
-      errors: {},
     };
   }
 
