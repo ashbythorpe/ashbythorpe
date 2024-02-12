@@ -59,6 +59,17 @@ export async function getComments(
           email: true,
         },
       },
+      replyTo: {
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
     },
   });
 

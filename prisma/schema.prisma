@@ -20,13 +20,16 @@ model Blog {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   postId    Int
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   content   String
   userId    String
-  blog      Blog     @relation(fields: [postId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  commentId Int?
+  blog      Blog      @relation(fields: [postId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  replyTo   Comment?  @relation("reply", fields: [commentId], references: [id])
+  replies   Comment[] @relation("reply")
 }
 
 model User {

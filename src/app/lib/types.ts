@@ -14,4 +14,16 @@ export type Comment = {
     name: string | null;
     email: string | null;
   };
+  replyTo: {
+    id: number;
+    user: {
+      name: string | null;
+      email: string | null;
+    };
+  } | null;
+};
+
+export type ReplyTo = {
+  id: number;
+  username: string;
 };

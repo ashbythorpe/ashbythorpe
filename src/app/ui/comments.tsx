@@ -1,39 +1,35 @@
-import { getComments, getTotalComments } from "../lib/data";
-import { Comment } from "../lib/types";
+import { Comment, ReplyTo } from "../lib/types";
 import { CommentList } from "./commentList";
 import { Pagination } from "./pagination";
 
-export default async function Comments({
+export default function Comments({
+  comments,
+  nComments,
   name,
   params,
   id,
+  changeReply,
 }: {
+  comments: Comment[];
+  nComments: number;
   name: string;
   params: { page?: string };
   id: string | null;
+  changeReply: (replyTo: ReplyTo) => void;
 }) {
   const page = Number(params.page || 1);
 
-  const comments: Comment[] = await getComments(name, page);
+  const totalPages = Math.ceil(nComments / 6);
 
   return (
     <div className="rounded-sm border border-gray-700 p-2">
-      <CommentList comments={comments} id={id} name={name} />
-      <PaginationWrapper name={name} page={page} />
+      <CommentList
+        comments={comments}
+        id={id}
+        name={name}
+        changeReply={changeReply}
+      />
+      <Pagination page={page} totalPages={totalPages} />
     </div>
   );
-}
-
-async function PaginationWrapper({
-  name,
-  page,
-}: {
-  name: string;
-  page: number;
-}) {
-  const totalComments = await getTotalComments(name);
-
-  const totalPages = Math.ceil(totalComments / 6);
-
-  return <Pagination page={page} totalPages={totalPages} />;
 }

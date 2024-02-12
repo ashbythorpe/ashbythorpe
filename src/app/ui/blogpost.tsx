@@ -1,8 +1,7 @@
-import { auth, signOut } from "../../../auth";
-import { getUserName } from "../lib/utils";
-import Comments from "./comments";
-import { CreateComment } from "./createComment";
-import { SignInButton } from "./signIn";
+import { auth } from "../../../auth";
+import { getComments, getTotalComments } from "../lib/data";
+import { Comment } from "../lib/types";
+import CommentsClient from "./comments-client";
 
 export default async function BlogPost({
   children,
@@ -13,50 +12,37 @@ export default async function BlogPost({
   name: string;
   params: { page?: string };
 }) {
-  const session = await auth();
-
-  const username = session ? getUserName(session) : null;
-
   return (
     <div className="flex-grow w-full bg-gray-100 h-full py-5 px-5 md:px-20 lg:px-40">
       <div className="prose">{children}</div>
       <hr className="my-10 bg-gray-300 border-0 h-px" />
-      <Comments name={name} params={params} id={session?.user?.id || null} />
-      <SignInOrCreateComment postName={name} username={username} />
+      <CommentsWrapper name={name} params={params} />
     </div>
   );
 }
 
-async function SignInOrCreateComment({
-  postName,
-  username,
+async function CommentsWrapper({
+  name,
+  params,
 }: {
-  postName: string;
-  username: string | null;
+  name: string;
+  params: { page?: string };
 }) {
-  if (username) {
-    return (
-      <>
-        <CreateComment username={username} postName={postName} />
-        <SignOutButton />
-      </>
-    );
-  } else {
-    return <SignInButton />;
-  }
-}
+  const page = Number(params.page || 1);
 
-function SignOutButton() {
+  const [session, comments, nComments] = await Promise.all([
+    auth(),
+    getComments(name, page),
+    getTotalComments(name),
+  ]);
+
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
-      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-        Sign out
-      </button>
-    </form>
+    <CommentsClient
+      name={name}
+      params={params}
+      comments={comments}
+      nComments={nComments}
+      session={session}
+    ></CommentsClient>
   );
 }

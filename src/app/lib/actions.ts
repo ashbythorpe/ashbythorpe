@@ -1,7 +1,7 @@
 "use server";
 
 import { AuthError } from "next-auth";
-import { auth, signIn } from "../../../auth";
+import { auth, signIn, signOut } from "../../../auth";
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
 import { redirect } from "next/navigation";
@@ -39,26 +39,59 @@ export async function authenticate() {
   }
 }
 
-async function postComment(comment: string, id: string, postName: string) {
-  await prisma.comment.create({
-    data: {
-      content: comment,
-      blog: {
-        connect: {
-          name: postName,
+export async function logout() {
+  await signOut();
+}
+
+async function postComment(
+  comment: string,
+  id: string,
+  postName: string,
+  replyId: number | null,
+) {
+  if (replyId) {
+    await prisma.comment.create({
+      data: {
+        content: comment,
+        blog: {
+          connect: {
+            name: postName,
+          },
+        },
+        user: {
+          connect: {
+            id: id,
+          },
+        },
+        replyTo: {
+          connect: {
+            id: replyId,
+          },
         },
       },
-      user: {
-        connect: {
-          id: id,
+    });
+  } else {
+    await prisma.comment.create({
+      data: {
+        content: comment,
+        blog: {
+          connect: {
+            name: postName,
+          },
+        },
+        user: {
+          connect: {
+            id: id,
+          },
         },
       },
-    },
-  });
+    });
+  }
 }
 
 export async function createComment(
   postName: string,
+  replyId: number | null,
   prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -89,7 +122,7 @@ export async function createComment(
   }
 
   try {
-    await postComment(content, session.user.id, postName);
+    await postComment(content, session.user.id, postName, replyId);
   } catch (error) {
     console.error(error);
     return {
@@ -98,7 +131,10 @@ export async function createComment(
   }
 
   revalidatePath(`/blog/${postName}`);
-  redirect(`/blog/${postName}`);
+
+  return {
+    message: null,
+  };
 }
 
 export async function deleteComment(id: number, postName: string) {
@@ -132,5 +168,4 @@ export async function deleteComment(id: number, postName: string) {
   });
 
   revalidatePath(`/blog/${postName}`);
-  redirect(`/blog/${postName}`);
 }
