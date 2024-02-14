@@ -24,6 +24,8 @@ export default function CommentsClient({
   nComments: number;
 }) {
   const [replyTo, setReplyTo] = useState<ReplyTo | null>(null);
+  const [editing, setEditing] = useState<number | null>(null);
+  const [content, setContent] = useState("");
 
   const username = session ? getUserName(session) : null;
 
@@ -35,13 +37,19 @@ export default function CommentsClient({
         name={name}
         params={params}
         id={session?.user?.id || null}
-        changeReply={setReplyTo}
+        setReply={setReplyTo}
+        setEdit={setEditing}
+        setContent={setContent}
       />
       <SignInOrCreateComment
         postName={name}
         username={username}
         replyTo={replyTo}
         setReplyTo={setReplyTo}
+        editing={editing}
+        setEditing={setEditing}
+        content={content}
+        setContent={setContent}
       />
     </>
   );
@@ -52,11 +60,19 @@ function SignInOrCreateComment({
   username,
   replyTo,
   setReplyTo,
+  editing,
+  setEditing,
+  content,
+  setContent,
 }: {
   postName: string;
   username: string | null;
   replyTo: ReplyTo | null;
   setReplyTo: (replyTo: ReplyTo | null) => void;
+  editing: number | null;
+  setEditing: (editing: number | null) => void;
+  content: string;
+  setContent: (content: string) => void;
 }) {
   if (username) {
     return (
@@ -66,6 +82,10 @@ function SignInOrCreateComment({
           postName={postName}
           replyTo={replyTo}
           setReplyTo={setReplyTo}
+          editing={editing}
+          setEditing={setEditing}
+          content={content}
+          setContent={setContent}
         />
         <SignOutButton />
       </>

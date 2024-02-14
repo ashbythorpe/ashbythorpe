@@ -4,7 +4,6 @@ import { AuthError } from "next-auth";
 import { auth, signIn, signOut } from "../../../auth";
 import { revalidatePath } from "next/cache";
 import prisma from "./prisma";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export type FormState = {
@@ -48,8 +47,35 @@ async function postComment(
   id: string,
   postName: string,
   replyId: number | null,
+  editId: number | null,
 ) {
-  if (replyId) {
+  if (editId && replyId) {
+    await prisma.comment.update({
+      where: {
+        id: editId,
+      },
+      data: {
+        content: comment,
+        replyTo: {
+          connect: {
+            id: replyId,
+          },
+        },
+      },
+    });
+  } else if (editId) {
+    await prisma.comment.update({
+      where: {
+        id: editId,
+      },
+      data: {
+        content: comment,
+        replyTo: {
+          disconnect: true,
+        },
+      },
+    });
+  } else if (replyId) {
     await prisma.comment.create({
       data: {
         content: comment,
@@ -92,6 +118,7 @@ async function postComment(
 export async function createComment(
   postName: string,
   replyId: number | null,
+  editId: number | null,
   prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -122,7 +149,7 @@ export async function createComment(
   }
 
   try {
-    await postComment(content, session.user.id, postName, replyId);
+    await postComment(content, session.user.id, postName, replyId, editId);
   } catch (error) {
     console.error(error);
     return {

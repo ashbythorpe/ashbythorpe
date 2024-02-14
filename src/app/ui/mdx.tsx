@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function H2({ children }: { children?: React.ReactNode }) {
   if (!children || typeof (children as string) !== "string") {
     return <h2>{children}</h2>;
@@ -8,12 +10,12 @@ export default function H2({ children }: { children?: React.ReactNode }) {
   return (
     <h2 id={id} className="group">
       {children}
-      <a
+      <Link
         href={`#${id}`}
         className="pl-2 hidden group-hover:inline text-gray-500"
       >
         #
-      </a>
+      </Link>
     </h2>
   );
 }

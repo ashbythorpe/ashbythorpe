@@ -86,6 +86,14 @@ const config: Config = {
             transform: "translateX(100%)",
           },
         },
+        flash: {
+          "0%": {
+            "background-color": "#e4ab0e7f",
+          },
+          "100%": {
+            "background-color": "transparent",
+          },
+        },
       },
     },
   },

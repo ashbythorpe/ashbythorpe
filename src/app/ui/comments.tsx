@@ -8,14 +8,18 @@ export default function Comments({
   name,
   params,
   id,
-  changeReply,
+  setReply,
+  setEdit,
+  setContent,
 }: {
   comments: Comment[];
   nComments: number;
   name: string;
   params: { page?: string };
   id: string | null;
-  changeReply: (replyTo: ReplyTo) => void;
+  setReply: (replyTo: ReplyTo | null) => void;
+  setEdit: (editing: number) => void;
+  setContent: (content: string) => void;
 }) {
   const page = Number(params.page || 1);
 
@@ -27,7 +31,9 @@ export default function Comments({
         comments={comments}
         id={id}
         name={name}
-        changeReply={changeReply}
+        setReply={setReply}
+        setEdit={setEdit}
+        setContent={setContent}
       />
       <Pagination page={page} totalPages={totalPages} />
     </div>
