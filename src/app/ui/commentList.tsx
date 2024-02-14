@@ -1,5 +1,7 @@
 import {
   ArrowUturnLeftIcon,
+  CheckCircleIcon,
+  CheckIcon,
   LinkIcon,
   PencilIcon,
 } from "@heroicons/react/24/outline";
@@ -7,6 +9,8 @@ import { Comment, ReplyTo } from "../lib/types";
 import { getReplyTo, getUserName } from "../lib/utils";
 import { DeleteButton } from "./createComment";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
 
 export function CommentList({
   comments,
@@ -122,11 +126,56 @@ function EditButton({ onClick }: { onClick: () => void }) {
 }
 
 function LinkButton({ href }: { href: string }) {
+  const [message, setMessage] = useState("");
+  const [hidden, setHidden] = useState(true);
+  const [success, setSuccess] = useState(true);
+
+  const [absoluteURL, setAbsoluteURL] = useState("");
+
+  // Get the URL on the client
+  useEffect(() => {
+    setAbsoluteURL(new URL(href, document.baseURI).href);
+  }, [href]);
+
+  const onClick = () => {
+    navigator.clipboard
+      .writeText(absoluteURL)
+      .then(() => {
+        setMessage("Copied!");
+        setSuccess(true);
+        setHidden(false);
+        setTimeout(() => {
+          setHidden(true);
+        }, 500);
+      })
+      .catch(() => {
+        setMessage("Failed to copy");
+        setSuccess(false);
+        setHidden(false);
+        setTimeout(() => {
+          setHidden(true);
+        }, 500);
+      });
+  };
+
   return (
-    <div className="flex-grow pt-1">
-      <Link href={href} className="text-black-300 hover:text-black-400">
-        <LinkIcon className="w-3.5 h-auto" />
-      </Link>
+    <div className="flex-grow flex pt-1">
+      <div
+        className={clsx("rounded-sm text-xs mr-1", {
+          "bg-black-300 text-black-800": success,
+          "bg-red-400 text-red-800": !success,
+          "opacity-0 transition-opacity": hidden,
+        })}
+      >
+        <p>{message}</p>
+      </div>
+      <button onClick={onClick} className="text-black-300 hover:text-black-400">
+        {success && !hidden ? (
+          <CheckIcon className="w-3.5 h-auto" />
+        ) : (
+          <LinkIcon className="w-3.5 h-auto" />
+        )}
+      </button>
     </div>
   );
 }
