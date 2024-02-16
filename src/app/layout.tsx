@@ -3,6 +3,7 @@ import "./globals.css";
 import NavHeader from "./ui/nav";
 import { inter } from "./ui/fonts";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Ashby Thorpe",
@@ -22,6 +23,7 @@ export default function RootLayout({
           {children}
         </div>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
