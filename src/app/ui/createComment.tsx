@@ -1,13 +1,15 @@
 import { useFormState, useFormStatus } from "react-dom";
 import { FormState, createComment, deleteComment } from "../lib/actions";
 import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ReplyTo } from "../lib/types";
+import { ReplyTo, SimpleReplyTo } from "../lib/types";
 
 export function CreateComment({
   username,
   postName,
-  replyTo,
-  setReplyTo,
+  reply,
+  setReply,
+  originalReply,
+  setOriginalReply,
   editing,
   setEditing,
   content,
@@ -15,8 +17,10 @@ export function CreateComment({
 }: {
   username: string;
   postName: string;
-  replyTo: ReplyTo | null;
-  setReplyTo: (replyTo: ReplyTo | null) => void;
+  reply: SimpleReplyTo | null;
+  setReply: (replyTo: SimpleReplyTo | null) => void;
+  originalReply: number | null;
+  setOriginalReply: (originalReply: number | null) => void;
   editing: number | null;
   setEditing: (editing: number | null) => void;
   content: string;
@@ -25,7 +29,8 @@ export function CreateComment({
   const createSpecificComment = createComment.bind(
     null,
     postName,
-    replyTo?.id || null,
+    reply?.id || null,
+    originalReply,
     editing,
   );
 
@@ -40,7 +45,8 @@ export function CreateComment({
     if (!state.message && !state.errors?.content) {
       // Reset the text area if the comment was successful
       setContent("");
-      setReplyTo(null);
+      setReply(null);
+      setOriginalReply(null);
       setEditing(null);
     }
   };
@@ -48,7 +54,13 @@ export function CreateComment({
   return (
     <div className="w-2/3 border-b border-b-gray-400/70 items-center flex flex-col pb-2 mb-4">
       {editing && <Editing setEditing={setEditing} />}
-      {replyTo && <ReplyingTo replyTo={replyTo} setReplyTo={setReplyTo} />}
+      {reply && (
+        <ReplyingTo
+          reply={reply}
+          setReply={setReply}
+          setOriginalReply={setOriginalReply}
+        />
+      )}
       <p className="text-gray-400 text-sm">{username}</p>
       <form action={action}>
         <textarea
@@ -94,40 +106,28 @@ function Editing({
 }
 
 function ReplyingTo({
-  replyTo,
-  setReplyTo,
+  reply,
+  setReply,
+  setOriginalReply,
 }: {
-  replyTo: ReplyTo;
-  setReplyTo: (replyTo: ReplyTo | null) => void;
+  reply: SimpleReplyTo;
+  setReply: (replyTo: SimpleReplyTo | null) => void;
+  setOriginalReply: (originalReply: number | null) => void;
 }) {
   return (
     <div className="flex text-black-400 text-sm">
       <p>
-        Replying to <span className="font-bold">{replyTo.username}</span>
+        Replying to <span className="font-bold">{reply.username}</span>
       </p>
       <button
         className="hover:text-black-500 pl-2"
-        onClick={() => setReplyTo(null)}
+        onClick={() => {
+          setReply(null);
+          setOriginalReply(reply.id);
+        }}
       >
         <XMarkIcon className="w-3.5 h-auto" />
       </button>
     </div>
-  );
-}
-
-export function DeleteButton({ id, name }: { id: number; name: string }) {
-  const { pending } = useFormStatus();
-
-  const action = deleteComment.bind(null, id, name);
-
-  return (
-    <form action={action}>
-      <button
-        className="text-black-300 hover:text-black-400"
-        aria-disabled={pending}
-      >
-        <TrashIcon className="w-3.5 h-auto" />
-      </button>
-    </form>
   );
 }

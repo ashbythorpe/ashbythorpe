@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { signOut } from "../../../auth";
 import { getUserName } from "../lib/utils";
-import Comments from "./comments";
 import { CreateComment } from "./createComment";
 import { SignInButton } from "./signIn";
 import { Session } from "next-auth";
 import { logout } from "../lib/actions";
-import { Comment, ReplyTo } from "../lib/types";
+import { Comment, ReplyTo, SimpleReplyTo } from "../lib/types";
+import { CommentList } from "./commentList";
+import { Pagination } from "./pagination";
 
 export default function CommentsClient({
   name,
@@ -23,29 +24,37 @@ export default function CommentsClient({
   comments: Comment[];
   nComments: number;
 }) {
-  const [replyTo, setReplyTo] = useState<ReplyTo | null>(null);
+  const [reply, setReply] = useState<SimpleReplyTo | null>(null);
+  const [originalReply, setOriginalReply] = useState<number | null>(null);
   const [editing, setEditing] = useState<number | null>(null);
   const [content, setContent] = useState("");
 
   const username = session ? getUserName(session) : null;
+  const page = params?.page ? parseInt(params.page) : 1;
+
+  const totalPages = Math.ceil(nComments / 6);
 
   return (
     <>
-      <Comments
-        comments={comments}
-        nComments={nComments}
-        name={name}
-        params={params}
-        id={session?.user?.id || null}
-        setReply={setReplyTo}
-        setEdit={setEditing}
-        setContent={setContent}
-      />
+      <div className="rounded-sm border border-gray-700 p-2">
+        <CommentList
+          comments={comments}
+          id={session?.user?.id || null}
+          name={name}
+          setReply={setReply}
+          setEdit={setEditing}
+          setOriginalReply={setOriginalReply}
+          setContent={setContent}
+        />
+        <Pagination page={page} totalPages={totalPages} />
+      </div>
       <SignInOrCreateComment
         postName={name}
         username={username}
-        replyTo={replyTo}
-        setReplyTo={setReplyTo}
+        reply={reply}
+        setReply={setReply}
+        originalReply={originalReply}
+        setOriginalReply={setOriginalReply}
         editing={editing}
         setEditing={setEditing}
         content={content}
@@ -58,8 +67,10 @@ export default function CommentsClient({
 function SignInOrCreateComment({
   postName,
   username,
-  replyTo,
-  setReplyTo,
+  reply,
+  setReply,
+  originalReply,
+  setOriginalReply,
   editing,
   setEditing,
   content,
@@ -67,8 +78,10 @@ function SignInOrCreateComment({
 }: {
   postName: string;
   username: string | null;
-  replyTo: ReplyTo | null;
-  setReplyTo: (replyTo: ReplyTo | null) => void;
+  reply: SimpleReplyTo | null;
+  setReply: (replyTo: SimpleReplyTo | null) => void;
+  originalReply: number | null;
+  setOriginalReply: (originalReply: number | null) => void;
   editing: number | null;
   setEditing: (editing: number | null) => void;
   content: string;
@@ -80,8 +93,10 @@ function SignInOrCreateComment({
         <CreateComment
           username={username}
           postName={postName}
-          replyTo={replyTo}
-          setReplyTo={setReplyTo}
+          reply={reply}
+          setReply={setReply}
+          originalReply={originalReply}
+          setOriginalReply={setOriginalReply}
           editing={editing}
           setEditing={setEditing}
           content={content}

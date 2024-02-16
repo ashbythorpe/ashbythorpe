@@ -47,6 +47,7 @@ async function postComment(
   id: string,
   postName: string,
   replyId: number | null,
+  originalReplyId: number | null,
   editId: number | null,
 ) {
   if (editId && replyId) {
@@ -61,6 +62,11 @@ async function postComment(
             id: replyId,
           },
         },
+        originalReplyTo: {
+          connect: {
+            id: originalReplyId,
+          },
+        },
       },
     });
   } else if (editId) {
@@ -71,6 +77,9 @@ async function postComment(
       data: {
         content: comment,
         replyTo: {
+          disconnect: true,
+        },
+        originalReplyTo: {
           disconnect: true,
         },
       },
@@ -92,6 +101,11 @@ async function postComment(
         replyTo: {
           connect: {
             id: replyId,
+          },
+        },
+        originalReplyTo: {
+          connect: {
+            id: originalReplyId,
           },
         },
       },
@@ -118,6 +132,7 @@ async function postComment(
 export async function createComment(
   postName: string,
   replyId: number | null,
+  originalReplyId: number | null,
   editId: number | null,
   prevState: FormState,
   formData: FormData,
@@ -149,7 +164,14 @@ export async function createComment(
   }
 
   try {
-    await postComment(content, session.user.id, postName, replyId, editId);
+    await postComment(
+      content,
+      session.user.id,
+      postName,
+      replyId,
+      originalReplyId,
+      editId,
+    );
   } catch (error) {
     console.error(error);
     return {

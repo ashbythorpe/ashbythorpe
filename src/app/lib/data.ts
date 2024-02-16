@@ -42,6 +42,9 @@ export async function getComments(
       blog: {
         name: name,
       },
+      replyTo: {
+        is: null,
+      },
     },
     skip: COMMENTS_PER_PAGE * (page - 1),
     take: COMMENTS_PER_PAGE,
@@ -59,13 +62,32 @@ export async function getComments(
           email: true,
         },
       },
-      replyTo: {
+      replies: {
         select: {
           id: true,
+          createdAt: true,
+          content: true,
           user: {
             select: {
+              id: true,
               name: true,
               email: true,
+            },
+          },
+          replyTo: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  name: true,
+                  email: true,
+                },
+              },
+            },
+          },
+          originalReplyTo: {
+            select: {
+              id: true,
             },
           },
         },

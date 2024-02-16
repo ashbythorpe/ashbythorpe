@@ -20,16 +20,19 @@ model Blog {
 }
 
 model Comment {
-  id        Int       @id @default(autoincrement())
-  postId    Int
-  createdAt DateTime  @default(now())
-  content   String
-  userId    String
-  commentId Int?
-  blog      Blog      @relation(fields: [postId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
-  replyTo   Comment?  @relation("reply", fields: [commentId], references: [id])
-  replies   Comment[] @relation("reply")
+  id              Int       @id @default(autoincrement())
+  postId          Int
+  createdAt       DateTime  @default(now())
+  content         String
+  userId          String
+  replyId         Int?
+  originalReplyId Int?
+  blog            Blog      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  replyTo         Comment?  @relation("reply", fields: [replyId], references: [id], onDelete: Cascade)
+  directReplies   Comment[] @relation("reply")
+  originalReplyTo Comment?  @relation("originalReply", fields: [originalReplyId], references: [id], onDelete: Cascade)
+  replies         Comment[] @relation("originalReply")
 }
 
 model User {

@@ -14,16 +14,33 @@ export type Comment = {
     name: string | null;
     email: string | null;
   };
-  replyTo: {
+  replies: InnerComment[];
+};
+
+export type InnerComment = {
+  id: number;
+  createdAt: Date;
+  content: string;
+  user: {
+    id: string;
+    name: string | null;
+    email: string | null;
+  };
+  replyTo: ReplyTo;
+  originalReplyTo: {
     id: number;
-    user: {
-      name: string | null;
-      email: string | null;
-    };
-  } | null;
+  };
 };
 
 export type ReplyTo = {
+  id: number;
+  user: {
+    name: string;
+    email: string;
+  };
+};
+
+export type SimpleReplyTo = {
   id: number;
   username: string;
 };
