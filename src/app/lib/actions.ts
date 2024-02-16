@@ -50,7 +50,7 @@ async function postComment(
   originalReplyId: number | null,
   editId: number | null,
 ) {
-  if (editId && replyId) {
+  if (editId && replyId && originalReplyId) {
     await prisma.comment.update({
       where: {
         id: editId,
@@ -84,7 +84,7 @@ async function postComment(
         },
       },
     });
-  } else if (replyId) {
+  } else if (replyId && originalReplyId) {
     await prisma.comment.create({
       data: {
         content: comment,
