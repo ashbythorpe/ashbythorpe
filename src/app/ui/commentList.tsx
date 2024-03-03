@@ -42,7 +42,8 @@ export function CommentList({
             }}
           >
             <Replies
-              replies={comment.replies}
+              originalReplyId={comment.id}
+              replyNumber={comment._count.replies}
               id={id}
               name={name}
               setReply={setReply}

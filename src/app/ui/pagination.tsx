@@ -3,7 +3,6 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { getTotalPosts } from "../lib/data";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export function Pagination({
@@ -72,7 +71,7 @@ function generatePageButtons(
   const pageNumbers = getPageNumbers(current, total);
 
   return pageNumbers.map((page, index) =>
-    pageButton(index, page, current, total, createPageURL),
+    pageButton(index, page, current, createPageURL),
   );
 }
 
@@ -96,7 +95,6 @@ function pageButton(
   key: number,
   page: string | number,
   current: number,
-  total: number,
   createPageURL: (pageNumber: number) => string,
 ) {
   if (page === "...") {
@@ -120,7 +118,7 @@ function pageButton(
   const className = clsx(
     "w-10 h-10 rounded border-2 border-white border-hidden flex justify-center items-center",
     {
-      "bg-blue-500 text-gray-50 border-solid": active,
+      "bg-indigo-500 text-gray-50 border-solid": active,
       "hover:bg-gray-400 hover:text-gray-50": !active,
     },
   );

@@ -1,6 +1,9 @@
+"use server";
+
 import prisma from "@/app/lib/prisma";
 import { unstable_noStore as noStore } from "next/cache";
-import { Comment, Post } from "./types";
+import { Comment, Post, Reply } from "./types";
+import { cache } from "react";
 
 const ITEMS_PER_PAGE = 3;
 export async function getPosts(page: number): Promise<Post[]> {
@@ -62,32 +65,47 @@ export async function getComments(
           email: true,
         },
       },
-      replies: {
+      _count: {
+        select: { replies: true }
+      }
+    },
+  });
+
+  return comments;
+}
+
+export const getCachedReplies = cache(async (id: number) => {
+  return await getReplies(id);
+})
+
+export async function getReplies(id: number): Promise<Reply[]> {
+  const replies = await prisma.comment.findMany({
+    where: {
+      replyTo: {
+        id,
+      },
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      content: true,
+      user: {
         select: {
           id: true,
-          createdAt: true,
-          content: true,
+          name: true,
+          email: true,
+        },
+      },
+      replyTo: {
+        select: {
+          id: true,
           user: {
             select: {
-              id: true,
               name: true,
               email: true,
-            },
-          },
-          replyTo: {
-            select: {
-              id: true,
-              user: {
-                select: {
-                  name: true,
-                  email: true,
-                },
-              },
-            },
-          },
-          originalReplyTo: {
-            select: {
-              id: true,
             },
           },
         },
@@ -95,7 +113,7 @@ export async function getComments(
     },
   });
 
-  return comments;
+  return replies;
 }
 
 export async function getTotalComments(name: string) {

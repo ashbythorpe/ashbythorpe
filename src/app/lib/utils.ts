@@ -1,14 +1,14 @@
 import { Session } from "next-auth";
-import { Comment, InnerComment, ReplyTo, SimpleReplyTo } from "./types";
+import { Comment, Reply, ReplyTo, SimpleReplyTo } from "./types";
 
 export function getUserName(
-  comment: Comment | InnerComment | Session | ReplyTo,
+  comment: Comment | Reply | Session | ReplyTo,
 ) {
   return comment.user?.name || comment.user?.email || "Anonymous";
 }
 
 export function simplifyReplyTo(
-  comment: Comment | InnerComment | ReplyTo,
+  comment: Comment | Reply | ReplyTo,
 ): SimpleReplyTo {
   return {
     id: comment.id,
@@ -17,6 +17,14 @@ export function simplifyReplyTo(
 }
 
 export function duration(date: Date) {
+  if (typeof date === "string") {
+    try {
+      date = new Date(date);
+    } catch (e) {
+      console.error(e);
+      return "Unknown";
+    }
+  }
   const duration = Date.now() - date.getTime();
   const days = Math.floor(duration / (1000 * 60 * 60 * 24));
 

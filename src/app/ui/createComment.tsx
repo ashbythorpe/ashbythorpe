@@ -1,7 +1,7 @@
 import { useFormState, useFormStatus } from "react-dom";
-import { FormState, createComment, deleteComment } from "../lib/actions";
-import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ReplyTo, SimpleReplyTo } from "../lib/types";
+import { FormState, createComment } from "../lib/actions";
+import { PaperAirplaneIcon, PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { SimpleReplyTo } from "../lib/types";
 
 export function CreateComment({
   username,
@@ -52,37 +52,47 @@ export function CreateComment({
   };
 
   return (
-    <div className="w-2/3 border-b border-b-gray-400/70 items-center flex flex-col pb-2 mb-4">
-      {editing && <Editing setEditing={setEditing} />}
-      {reply && (
-        <ReplyingTo
-          reply={reply}
-          setReply={setReply}
-          setOriginalReply={setOriginalReply}
-        />
-      )}
-      <p className="text-gray-400 text-sm">{username}</p>
-      <form action={action}>
-        <textarea
-          className="w-full"
-          name="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-        {state?.errors?.content &&
-          state.errors.content.map((error) => (
-            <p className="text-sm text-red-500" key={error}>
-              {error}
-            </p>
-          ))}
-        <button className="text-blue-500" aria-disabled={pending}>
-          Comment
+    <form action={action} className="flex flex-col md:flex-row mx-auto w-5/6 border-b border-b-gray-400/70 pb-4 mb-4 mt-8">
+      <div className="mx-auto w-full items-center flex flex-col">
+        {editing && <Editing setEditing={setEditing} />}
+        {reply && (
+          <ReplyingTo
+            reply={reply}
+            setReply={setReply}
+            setOriginalReply={setOriginalReply}
+          />
+        )}
+        <div className="rounded-t bg-indigo-800 px-4 py-1">
+          <p className="text-black-100 text-sm font-semibold">{username}</p>
+        </div>
+        <div className="w-5/6">
+          <textarea
+            className="w-full h-max py-1 px-2 rounded outline-none shadow-[0_0_0_1px_#b0b0b0] focus:shadow-[0_0_0_2px_#92a2e7]"
+            name="content"
+            value={content}
+            placeholder="Add a comment..."
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
+          {state?.errors?.content &&
+            state.errors.content.map((error) => (
+              <p className="text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+        </div>
+      </div>
+      <div className="mx-10 md:mx-0 self-stretch flex flex-col items-center md:justify-center mt-2 md:mt-0">
+        <button className="text-black-900 md:text-indigo-500 hover:text-indigo-800 bg-jaffa-300 md:bg-transparent hover:bg-jaffa-200 md:hover:bg-transparent rounded px-4 py-2 md:mr-8 md:mt-6" aria-disabled={pending}>
+          <div className="flex space-x-1">
+            <p>Comment</p>
+            <PaperAirplaneIcon className="w-4 h-auto" />
+          </div>
         </button>
         {state?.message && (
           <p className="text-sm text-red-500">{state.message}</p>
         )}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
 

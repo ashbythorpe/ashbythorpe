@@ -1,4 +1,4 @@
-import { Comment, InnerComment, ReplyTo, SimpleReplyTo } from "../lib/types";
+import { Comment, Reply, SimpleReplyTo } from "../lib/types";
 import { duration, getUserName } from "../lib/utils";
 import { DeleteButton, EditButton, LinkButton, ReplyButton } from "./buttons";
 
@@ -12,7 +12,7 @@ export default function Comment({
   onEdit,
 }: {
   children?: React.ReactNode;
-  comment: Comment | InnerComment;
+  comment: Comment | Reply;
   owned: boolean;
   postName: string;
   reply?: SimpleReplyTo;

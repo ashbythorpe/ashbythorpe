@@ -1,7 +1,8 @@
+import { Suspense } from "react";
 import { auth } from "../../../auth";
 import { getComments, getTotalComments } from "../lib/data";
-import { Comment } from "../lib/types";
 import CommentsClient from "./comments-client";
+import CommentsSkeleton from "./commentsSkeleton";
 
 export default async function BlogPost({
   children,
@@ -16,7 +17,9 @@ export default async function BlogPost({
     <div className="flex-grow w-full bg-gray-100 h-full py-5 px-5 md:px-20 lg:px-40">
       <div className="prose">{children}</div>
       <hr className="my-10 bg-gray-300 border-0 h-px" />
-      <CommentsWrapper name={name} params={params} />
+      <Suspense fallback={<CommentsSkeleton />}>
+        <CommentsWrapper name={name} params={params} />
+      </Suspense>
     </div>
   );
 }

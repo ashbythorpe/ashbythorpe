@@ -14,10 +14,12 @@ export type Comment = {
     name: string | null;
     email: string | null;
   };
-  replies: InnerComment[];
+  _count: {
+    replies: number;
+  };
 };
 
-export type InnerComment = {
+export type Reply = {
   id: number;
   createdAt: Date;
   content: string;
@@ -26,17 +28,14 @@ export type InnerComment = {
     name: string | null;
     email: string | null;
   };
-  replyTo: ReplyTo;
-  originalReplyTo: {
-    id: number;
-  };
+  replyTo: ReplyTo | null;
 };
 
 export type ReplyTo = {
   id: number;
   user: {
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
   };
 };
 

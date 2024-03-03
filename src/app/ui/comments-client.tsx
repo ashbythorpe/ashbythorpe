@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { signOut } from "../../../auth";
 import { getUserName } from "../lib/utils";
 import { CreateComment } from "./createComment";
-import { SignInButton } from "./signIn";
+import { SignInButton, SignOutButton } from "./signIn";
 import { Session } from "next-auth";
-import { logout } from "../lib/actions";
-import { Comment, ReplyTo, SimpleReplyTo } from "../lib/types";
+import { Comment, SimpleReplyTo } from "../lib/types";
 import { CommentList } from "./commentList";
 import { Pagination } from "./pagination";
 
@@ -102,20 +100,12 @@ function SignInOrCreateComment({
           content={content}
           setContent={setContent}
         />
-        <SignOutButton />
+        <div className="flex justify-center">
+          <SignOutButton />
+        </div>
       </>
     );
   } else {
     return <SignInButton />;
   }
-}
-
-function SignOutButton() {
-  return (
-    <form action={logout}>
-      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-        Sign out
-      </button>
-    </form>
-  );
 }

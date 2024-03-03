@@ -1,0 +1,22 @@
+import { getReplies } from "@/app/lib/data";
+import { NextRequest } from "next/server";
+
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+  const idParam = params.id;
+
+  if (!idParam) {
+    return new Response("No id", { status: 400 });
+  }
+
+  let id;
+
+  try {
+    id = parseInt(idParam, 10);
+  } catch (e) {
+    return new Response("Invalid id", { status: 400 });
+  }
+
+  const res = await getReplies(id);
+
+  return Response.json(res);
+}
