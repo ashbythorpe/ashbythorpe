@@ -20,9 +20,20 @@ export function CommentList({
   setEdit: (editing: number) => void;
   setContent: (content: string) => void;
 }) {
+  const Header = () => <p className="font-bold">Comments:</p>;
+
+  if (comments.length === 0) {
+    return (
+      <>
+        <Header />
+        <p className="text-black-800">No comments yet.</p>
+      </>
+    );
+  }
+
   return (
     <>
-      <p className="font-bold">Comments:</p>
+      <Header />
       <div>
         {comments.map((comment) => (
           <Comment

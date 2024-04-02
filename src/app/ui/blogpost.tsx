@@ -15,7 +15,7 @@ export default async function BlogPost({
 }) {
   return (
     <div className="flex-grow w-full bg-gray-100 h-full py-5 px-5 md:px-20 lg:px-40">
-      <div className="prose">{children}</div>
+      <div className="prose mx-auto">{children}</div>
       <hr className="my-10 bg-gray-300 border-0 h-px" />
       <Suspense fallback={<CommentsSkeleton />}>
         <CommentsWrapper name={name} params={params} />

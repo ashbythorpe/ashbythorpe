@@ -3,7 +3,6 @@
 import prisma from "@/app/lib/prisma";
 import { unstable_noStore as noStore } from "next/cache";
 import { Comment, Post, Reply } from "./types";
-import { cache } from "react";
 
 const ITEMS_PER_PAGE = 3;
 export async function getPosts(page: number): Promise<Post[]> {
@@ -73,10 +72,6 @@ export async function getComments(
 
   return comments;
 }
-
-export const getCachedReplies = cache(async (id: number) => {
-  return await getReplies(id);
-})
 
 export async function getReplies(id: number): Promise<Reply[]> {
   const replies = await prisma.comment.findMany({
