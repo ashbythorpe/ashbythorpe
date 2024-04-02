@@ -2,7 +2,6 @@ import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
   callbacks: {
-    // @ts-expect-error
     session: ({ session, user }) => ({
       ...session,
       user: {
