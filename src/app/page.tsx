@@ -13,8 +13,8 @@ export default function Home() {
             University of Bristol.
           </p>
           <p>
-            I am interested in building software and web applications, along
-            with data science in R and Python.
+            I have experience building complex projects in a variety of
+            programming languages.
           </p>
         </div>
         <Image src="/bottom_pattern.svg" alt="waves" width={900} height={900} />

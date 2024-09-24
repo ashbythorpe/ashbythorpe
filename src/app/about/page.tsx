@@ -32,10 +32,19 @@ export default function Page() {
             <Link href="https://shiny.rstudio.com/">Shiny</Link> packages.
           </li>
           <li>
+            In my free time, I learnt{" "}
+            <span className={clsx(nunito, "font-semibold")}>Rust</span>, and am
+            currently using it to implement a{" "}
+            <Link href="https://microsoft.github.io/language-server-protocol/">
+              Language Server
+            </Link>
+            , which is a very complex task.
+          </li>
+          <li>
             Being the first programming language I learnt,{" "}
             <span className={clsx(nunito, "font-semibold")}>Python</span> has
             been my language of choice for small scripts and projects. Notably,
-            I recently used{" "}
+            I used{" "}
             <Link href="https://beautiful-soup-4.readthedocs.io/en/latest/">
               Beautiful Soup
             </Link>{" "}
@@ -47,23 +56,28 @@ export default function Page() {
             <span className={clsx(nunito, "font-semibold")}>JavaScript</span>/
             <span className={clsx(nunito, "font-semibold")}>TypeScript</span>,
             and have used the <Link href="https://nextjs.org/">Next.js</Link>{" "}
-            and <Link href="https://reactjs.org/">React</Link> frameworks.
-          </li>
-          <li>
-            In my free time, I learnt{" "}
-            <span className={clsx(nunito, "font-semibold")}>Rust</span>, and am
-            currently using it to implement a simple neural network.
+            and <Link href="https://reactjs.org/">React</Link> frameworks for my
+            personal website and{" "}
+            <Link href="https://github.com/kasimrafique/BrisHack2024">
+              another project
+            </Link>{" "}
+            I worked on during a hackathon.
           </li>
           <li>
             I have learnt{" "}
+            <span className={clsx(nunito, "font-semibold")}>Java</span>,{" "}
             <span className={clsx(nunito, "font-semibold")}>C</span> and{" "}
             <span className={clsx(nunito, "font-semibold")}>Haskell</span>{" "}
             during my time at university, and used them for a few small
-            projects.
-          </li>
-          <li>
-            I am currently teaching myself{" "}
-            <span className={clsx(nunito, "font-semibold")}>Java</span>.
+            projects. Notably, I created an concurrent implementation of the{" "}
+            <Link href="https://en.wikipedia.org/wiki/Monte_Carlo_tree_search">
+              MCTS
+            </Link>{" "}
+            algorithm as part of a pair project for university (see{" "}
+            <Link href="https://www.researchgate.net/publication/224259872_Monte-Carlo_Tree_Search_for_the_Game_of_Scotland_Yard">
+              the paper
+            </Link>{" "}
+            we used)
           </li>
           <li>
             I have made extensive use of{" "}

@@ -1,0 +1,59 @@
+# Automating the browser in R with selenider
+
+[selenider](https://ashbythorpe.github.io/selenider/) is an R package used for
+automating web browsers, using either
+[chromote](https://rstudio.github.io/chromote/) or
+[selenium](https://ashbythorpe.github.io/selenium-r/). While not necessarily my
+largest project, it is one of the ones I am the most proud of. It demonstrates
+a well-structured codebase and well-thought-out API, and presents a package
+that solves a real problem in an elegant way. In this post, I don't want to
+go over what the package is and how to use it; instead, the post will discuss
+the process of creating the package and the design choices I made.
+
+## The beginning
+
+Before selenider, I had produced one other package:
+[nestedmodels](https://ashbythorpe.github.io/nestedmodels/index.html). A
+dependency-ridden and overly-niche package, it achieved the minorly difficult
+task of making it onto CRAN, but not much else.
+
+The problem presented itself in an unrelated project. I was working on
+automating interacting with a website in R using
+[RSelenium](https://docs.ropensci.org/RSelenium/index.html). Unfortunately, I
+found that no matter what I tried, I could not even get a web browser running.
+Eventually, I gave up and switched to the
+[selenium](https://pypi.org/project/selenium/) package in Python: at least I
+could get a browser working that way.
+
+However, I was soon battling with two new problems: a poor internet connection
+and an unreliable website. Half of the time, I would be looking for an
+element in the DOM which had not loaded in yet, and so selenium would throw an
+error. Of course, the obvious solution here is to wait for a specified amount
+of time, say a few seconds, for the element to load. The problem was that this
+time was not constant, a given element could take anywhere between 1 and 10
+seconds to load, all depending on my internet and the mood of the website's
+server. If I played it safe and chose to wait 10 seconds every time, the
+resulting program would be egregiously slow, and might still fail; I needed
+the code to be 100% reliable and reproducable.
+
+The solution I came up with was to keep requesting an element until it
+appeared in the UI, timing out if the element is not found after a certain
+number of seconds. For example, the function used to get an element looked like
+this:
+
+```python
+import time
+from selenium.webdriver.common.by import By
+
+def get_element(driver, css_selector):
+  end = time.time() + 10
+
+  while time.time() < end:
+    try:
+      element = driver.find_element(By.CSS_SELECTOR, css_selector)
+    except:
+      continue
+    return element
+```
+
+

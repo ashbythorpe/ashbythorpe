@@ -8,8 +8,14 @@ export default function Page() {
           title="selenider"
           href="https://ashbythorpe.github.io/selenider/"
         >
-          An R package to facilitate high level browser automation, using
-          Selenium and the Chrome Devtools Protocol.
+          A semi-popular R package to facilitate high level browser automation,
+          using Selenium and the Chrome Devtools Protocol.
+        </Project>
+        <Project
+          title="selenium-r"
+          href="https://ashbythorpe.github.io/selenium-r/"
+        >
+          Interface to Selenium from R.
         </Project>
         <Project
           title="financialDataAnalysis"
@@ -18,6 +24,8 @@ export default function Page() {
           A website made using Shiny, to analyze, forecast and visualise
           financial data.
         </Project>
+      </div>
+      <div className="flex flex-col w-full md:w-1/2 items-center">
         <Project
           title="nestedmodels"
           href="https://ashbythorpe.github.io/nestedmodels/"
@@ -25,8 +33,6 @@ export default function Page() {
           An R package, enhancing the tidymodels framework to support the
           modelling of nested data.
         </Project>
-      </div>
-      <div className="flex flex-col w-full md:w-1/2 items-center">
         <Project
           title="ashbythorpe.com"
           href="https://github.com/ashbythorpe/ashbythorpe.com"
@@ -35,10 +41,12 @@ export default function Page() {
           functional login and comment system.
         </Project>
         <Project
-          title="selenium-r"
-          href="https://ashbythorpe.github.io/selenium-r/"
+          title="r-analyzer"
+          href="https://github.com/ashbythorpe/r-analyzer"
         >
-          Interface to Selenium from R.
+          An (soon-to-be) implementation of the Language Server Protocol for R,
+          written in Rust. Currently consists of a hand-written fault-tolerant
+          Pratt parser.
         </Project>
       </div>
     </div>
