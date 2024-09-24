@@ -25,6 +25,7 @@
     "@vercel/postgres": "^0.5.1",
     "@vercel/speed-insights": "^1.0.8",
     "bright": "^0.8.4",
+    "caniuse-lite": "",
     "clsx": "^2.1.0",
     "next": "canary",
     "next-auth": "beta",
