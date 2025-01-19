@@ -9,10 +9,10 @@ export default function Home() {
         </div>
         <div className="flex-grow items-center w-2/3 md:w-1/2">
           <p>
-            I'm Ashby Thorpe. I study Mathematics and Computer Science at the
-            University of Bristol. I have experience building complex projects
-            in a variety of programming languages. This website features some of
-            my work.
+            I&apos;m Ashby Thorpe. I study Mathematics and Computer Science at
+            the University of Bristol. I have experience building complex
+            projects in a variety of programming languages. This website
+            features some of my work.
           </p>
         </div>
         <Image src="/bottom_pattern.svg" alt="waves" width={900} height={900} />

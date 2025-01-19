@@ -6,8 +6,8 @@ export default function Page() {
       <div className="flex flex-col h-full w-full items-center bg-black-50">
         <h1 className="text-4xl font-semibold mt-8">Projects</h1>
         <p className="mt-4 ms-4">
-          This is an array of open source projects I've worked on independently
-          over the past few years.
+          This is an array of open source projects I&apos;ve worked on
+          independently over the past few years.
         </p>
       </div>
       <div className="flex flex-grow h-full w-full bg-black-50 flex-wrap p-4">
