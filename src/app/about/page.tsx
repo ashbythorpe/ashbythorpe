@@ -5,21 +5,33 @@ import { nunito } from "../ui/fonts";
 
 export default function Page() {
   return (
-    <div className="flex-grow w-full bg-gray-100 h-full md:grid md:grid-cols-3 py-4 px-5 md:px-10">
+    <div className="flex-grow w-full bg-gray-100 h-full md:grid md:grid-cols-2 py-4 px-5 md:px-10">
       <div className="flex flex-col items-center">
         <h1 className="text-2xl text-gray-700 underline mt-4 my-4">
           Ashby Thorpe
         </h1>
+        <ul className="lg:px-20 md:px-10 px-4 my-4 list-disc [&_li]:pl-2 [&_li::marker]:text-black-600 [&_li::marker]:text-2xl">
+          <li>
+            Second year student at the University of Bristol studying Maths and
+            Computer Science.
+          </li>
+          <li>Excellent programming and numerical skills.</li>
+          <li>
+            Experience in software engineering, artificial intelligence and data
+            analysis.
+          </li>
+          <li>Confident team-worker, problem-solver and communicator.</li>
+        </ul>
         <a
           href="/cv.pdf"
           download="ashbythorpe-cv.pdf"
-          className="no-underline space-x-2 bg-blue-600 rounded p-2 mt-4 text-white flex hover:bg-blue-700"
+          className="no-underline space-x-2 bg-blue-600 rounded p-2 my-6 text-white flex hover:bg-blue-700"
         >
           <DocumentArrowDownIcon className="h-6 w-6" />
           <p className="">Download CV</p>
         </a>
       </div>
-      <div className="flex flex-col items-center col-span-2">
+      <div className="flex flex-col items-center">
         <h2 className="text-2xl text-gray-700 underline mt-4 my-4">
           Programming experience
         </h2>

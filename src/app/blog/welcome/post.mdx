@@ -12,7 +12,7 @@ rather than the tools I've used.
 ## Prior experience
 
 I was pretty new to full stack development before this project. However, I was
-*very* experienced with [shiny](https://shiny.posit.co/), a full stack
+_very_ experienced with [shiny](https://shiny.posit.co/), a full stack
 development framework in R. To be honest, shiny is pretty much the furthest you
 can get from traditional full stack tools: it is designed to be easy to use for
 small, simple web apps that have no real need for styling or speed (although
@@ -42,7 +42,7 @@ ever used it will tell you the exact same thing.
 
 ### Next.js
 
-The most obvious influence on  a person's experience when building a website is
+The most obvious influence on a person's experience when building a website is
 the web framework they use, in my case [Next.js](https://nextjs.org/). I chose
 it because it seemed popular, simple and used React.
 
@@ -89,7 +89,7 @@ unpack the ideas that Next.js provided and consider them in the context of the
 client-server model I was familiar with. For example, it seems quite obvious
 that to query a database on the client, you need to go through the server first
 (to hide credentials), but in practice many of my server-side components
-*could* query my database directly, making this two-stop route seem
+_could_ query my database directly, making this two-stop route seem
 counter-intuitive. This still frustrates me now, it seems to demonstrate that
 the abstractions provided by Next.js are leaky and overbearing.
 
@@ -128,7 +128,7 @@ My initial experience with Prisma was a little painful. While the code itself
 was easy to understand, I had a little trouble using the tooling, especially
 when trying to update the database. I found myself often having to reset all
 my data to accommodate a small change in the structure of one of my tables.
-And even when I managed to update the remote database  successfully, I found
+And even when I managed to update the remote database successfully, I found
 that the generated types would be out-of-date, generating diagnostics in my
 editor for perfectly valid queries.
 
@@ -155,10 +155,11 @@ model Comment {
   replies         Comment[] @relation("originalReply")
 }
 ```
+
 <figcaption>
-The Prisma schema for the `comment` table. While the first few fields are fairly
-simple, the relations at the end would be much more difficult to represent
-using SQL.
+  The Prisma schema for the `comment` table. While the first few fields are
+  fairly simple, the relations at the end would be much more difficult to
+  represent using SQL.
 </figcaption>
 
 ### Tailwind CSS
@@ -170,7 +171,7 @@ Tailwind, and I was keen to try it out.
 I was not disappointed. Tailwind made me realise just how much I hated writing
 regular CSS. It was fast, very well-documented and fun to use, and for the first
 time, I enjoyed customising my components at what felt like double the speed.
-Above all, I enjoyed the *simplicity* of it; it removed a barrier of abstraction
+Above all, I enjoyed the _simplicity_ of it; it removed a barrier of abstraction
 that regular CSS ushers you behind, reducing the gap between the design in your
 head and the code you create. Once you reject the re-usability that regular
 CSS classes provide you with, you realise you didn't need it in the first place.

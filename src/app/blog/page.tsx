@@ -4,11 +4,12 @@ import { Pagination } from "../ui/pagination";
 import { getTotalPosts } from "../lib/data";
 import { PostListSkeleton } from "../ui/postsSkeleton";
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
+export default async function Page(
+  props: {
+    searchParams: Promise<{ page?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const page = Number(searchParams.page || 1);
 
   return (

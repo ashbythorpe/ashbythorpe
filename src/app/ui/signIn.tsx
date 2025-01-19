@@ -1,11 +1,12 @@
 "use client";
 
+import { useActionState } from "react";
 import { authenticate, logout } from "../lib/actions";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 
 export function SignInButton() {
   const { pending } = useFormStatus();
-  const [state, dispatch] = useFormState(authenticate, undefined);
+  const [state, dispatch] = useActionState(authenticate, undefined);
 
   return (
     <>

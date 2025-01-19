@@ -1,7 +1,12 @@
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { FormState, createComment } from "../lib/actions";
-import { PaperAirplaneIcon, PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  PaperAirplaneIcon,
+  PencilIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { SimpleReplyTo } from "../lib/types";
+import { useActionState } from "react";
 
 export function CreateComment({
   username,
@@ -37,7 +42,7 @@ export function CreateComment({
   const { pending } = useFormStatus();
 
   const initialState: FormState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createSpecificComment, initialState);
+  const [state, dispatch] = useActionState(createSpecificComment, initialState);
 
   const action = (x: FormData) => {
     dispatch(x);
@@ -52,7 +57,10 @@ export function CreateComment({
   };
 
   return (
-    <form action={action} className="flex flex-col md:flex-row mx-auto w-5/6 border-b border-b-gray-400/70 pb-4 mb-4 mt-8">
+    <form
+      action={action}
+      className="flex flex-col md:flex-row mx-auto w-5/6 border-b border-b-gray-400/70 pb-4 mb-4 mt-8"
+    >
       <div className="mx-auto w-full items-center flex flex-col">
         {editing && <Editing setEditing={setEditing} />}
         {reply && (
@@ -82,7 +90,10 @@ export function CreateComment({
         </div>
       </div>
       <div className="mx-10 md:mx-0 self-stretch flex flex-col items-center md:justify-center mt-2 md:mt-0">
-        <button className="text-black-900 md:text-indigo-500 hover:text-indigo-800 bg-jaffa-300 md:bg-transparent hover:bg-jaffa-200 md:hover:bg-transparent rounded px-4 py-2 md:mr-8 md:mt-6" aria-disabled={pending}>
+        <button
+          className="text-black-900 md:text-indigo-500 hover:text-indigo-800 bg-jaffa-300 md:bg-transparent hover:bg-jaffa-200 md:hover:bg-transparent rounded px-4 py-2 md:mr-8 md:mt-6"
+          aria-disabled={pending}
+        >
           <div className="flex space-x-1">
             <p>Comment</p>
             <PaperAirplaneIcon className="w-4 h-auto" />

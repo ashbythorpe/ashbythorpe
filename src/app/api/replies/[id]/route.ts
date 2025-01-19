@@ -1,7 +1,11 @@
 import { getReplies } from "@/app/lib/data";
 import { NextRequest } from "next/server";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  props: { params: Promise<{ id: string }> },
+) {
+  const params = await props.params;
   const idParam = params.id;
 
   if (!idParam) {
@@ -12,7 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
   try {
     id = parseInt(idParam, 10);
-  } catch (e) {
+  } catch {
     return new Response("Invalid id", { status: 400 });
   }
 

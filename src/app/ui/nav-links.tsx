@@ -4,6 +4,7 @@ import {
   InformationCircleIcon,
   CodeBracketSquareIcon,
   PencilSquareIcon,
+  HomeIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { nunito } from "./fonts";
 
 const links = [
+  { name: "Home", href: "/", icon: HomeIcon },
   { name: "About me", href: "/about", icon: InformationCircleIcon },
   { name: "Projects", href: "/projects", icon: CodeBracketSquareIcon },
   { name: "Blog", href: "/blog", icon: PencilSquareIcon },
@@ -20,7 +22,7 @@ export default function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <div className="flex items-center space-x-7 justify-evenly justify-self-center mx-auto">
+    <div className="flex items-center space-x-2 md:space-x-7 lg:space-x-7 justify-evenly justify-self-center mx-auto">
       {links.map(({ name, href, icon: Icon }) => (
         <Link
           href={href}

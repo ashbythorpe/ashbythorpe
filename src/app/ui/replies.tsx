@@ -13,7 +13,7 @@ export default function Replies({
   setEdit,
   setContent,
 }: {
-  originalReplyId: number,
+  originalReplyId: number;
   replyNumber: number;
   id: string | null;
   name: string;
@@ -37,31 +37,47 @@ export default function Replies({
     };
 
     fetchReplies();
-  }, [originalReplyId, open, replies])
+  }, [originalReplyId, open]);
 
   if (replyNumber === 0) return null;
 
   if (!open) {
-    return <ReplyButton open={false} onClick={() => {
-      if (!replies) {
-        setLoading(true)
-      }
-      setOpen(true)
-    }} replies={replyNumber} />;
+    return (
+      <ReplyButton
+        open={false}
+        onClick={() => {
+          if (!replies) {
+            setLoading(true);
+          }
+          setOpen(true);
+        }}
+        replies={replyNumber}
+      />
+    );
   } else {
     return (
       <>
-        {loading ? <Loading /> : <ReplyButton open={true} onClick={() => setOpen(false)} replies={replyNumber} />}
-        {replies && !loading && <ReplyList
-          replies={replies}
-          originalReplyId={originalReplyId}
-          id={id}
-          name={name}
-          setReply={setReply}
-          setOriginalReply={setOriginalReply}
-          setEdit={setEdit}
-          setContent={setContent}
-        />}
+        {loading ? (
+          <Loading />
+        ) : (
+          <ReplyButton
+            open={true}
+            onClick={() => setOpen(false)}
+            replies={replyNumber}
+          />
+        )}
+        {replies && !loading && (
+          <ReplyList
+            replies={replies}
+            originalReplyId={originalReplyId}
+            id={id}
+            name={name}
+            setReply={setReply}
+            setOriginalReply={setOriginalReply}
+            setEdit={setEdit}
+            setContent={setContent}
+          />
+        )}
       </>
     );
   }
@@ -79,10 +95,7 @@ function ReplyButton({
   const Icon = open ? ChevronUpIcon : ChevronDownIcon;
 
   return (
-    <button
-      onClick={onClick}
-      className="flex text-black-800"
-    >
+    <button onClick={onClick} className="flex text-black-800">
       {replies} replies
       {<Icon className="h-5 w-5" />}
     </button>
@@ -90,5 +103,9 @@ function ReplyButton({
 }
 
 function Loading() {
-  return <button className="text-gray-500" aria-disabled>Loading...</button>;
+  return (
+    <button className="text-gray-500" aria-disabled>
+      Loading...
+    </button>
+  );
 }
