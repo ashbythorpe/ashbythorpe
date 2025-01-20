@@ -11,13 +11,13 @@ import { Pagination } from "./pagination";
 
 export default function CommentsClient({
   name,
-  params,
+  page,
   session,
   comments,
   nComments,
 }: {
   name: string;
-  params: { page?: string };
+  page: number;
   session: Session | null;
   comments: Comment[];
   nComments: number;
@@ -28,7 +28,6 @@ export default function CommentsClient({
   const [content, setContent] = useState("");
 
   const username = session ? getUserName(session) : null;
-  const page = params?.page ? parseInt(params.page) : 1;
 
   const totalPages = Math.ceil(nComments / 6);
 

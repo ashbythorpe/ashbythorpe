@@ -4,9 +4,9 @@ import Post from "./post.mdx";
 export default async function Page(props: {
   params: Promise<{ page?: string }>;
 }) {
-  const params = await props.params;
+  const { page } = await props.params;
   return (
-    <BlogPost name="welcome" params={params}>
+    <BlogPost name="welcome" page={page}>
       <Post />
     </BlogPost>
   );

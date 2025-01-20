@@ -7,18 +7,18 @@ import CommentsSkeleton from "./commentsSkeleton";
 export default async function BlogPost({
   children,
   name,
-  params,
+  page,
 }: {
   children: React.ReactNode;
   name: string;
-  params: { page?: string };
+  page?: string;
 }) {
   return (
     <div className="flex-grow w-full bg-gray-100 h-full py-5 px-5 md:px-20 lg:px-40">
       <div className="prose mx-auto">{children}</div>
       <hr className="my-10 bg-gray-300 border-0 h-px" />
       <Suspense fallback={<CommentsSkeleton />}>
-        <CommentsWrapper name={name} params={params} />
+        <CommentsWrapper name={name} page={page} />
       </Suspense>
     </div>
   );
@@ -26,12 +26,12 @@ export default async function BlogPost({
 
 async function CommentsWrapper({
   name,
-  params,
+  page: page_str,
 }: {
   name: string;
-  params: { page?: string };
+  page?: string;
 }) {
-  const page = Number(params.page || 1);
+  const page = Number(page_str || 1);
 
   const [session, comments, nComments] = await Promise.all([
     auth(),
@@ -42,7 +42,7 @@ async function CommentsWrapper({
   return (
     <CommentsClient
       name={name}
-      params={params}
+      page={page}
       comments={comments}
       nComments={nComments}
       session={session}
